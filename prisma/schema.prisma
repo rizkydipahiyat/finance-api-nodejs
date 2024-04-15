@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+  TRANSFER
+}
+
+enum BudgetPeriod {
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum Category {
+  Foods
+  Shopping
+  Transportation
+  Investment
+  Housing
+  Entertainment
+  Others
+}
+
+model User {
+  id       String  @id @default(uuid())
+  name     String  @db.VarChar(100)
+  email    String  @unique
+  password String  @db.VarChar(100)
+  token    String? @db.VarChar(100)
+
+  accounts     Account[]
+  transactions Transaction[]
+  budgets      Budget[]
+  Goal         Goal[]
+  Reminder     Reminder[]
+
+  @@map("users")
+}
+
+model Account {
+  id           String @id @default(uuid())
+  user_id      String
+  account_name String @db.VarChar(100)
+  balance      Int    @db.Int
+
+  user User @relation(fields: [user_id], references: [id])
+
+  transactions Transaction[]
+  budgets      Budget[]
+
+  @@map("accounts")
+}
+
+model Transaction {
+  id               String          @id @default(uuid())
+  user_id          String
+  account_id       String
+  transaction_date DateTime?       @default(now())
+  amount           Int
+  description      String          @db.VarChar(100)
+  transaction_type TransactionType
+  category         Category
+
+  user    User    @relation(fields: [user_id], references: [id])
+  account Account @relation(fields: [account_id], references: [id])
+
+  @@map("transactions")
+}
+
+model Budget {
+  id         String        @id @default(uuid())
+  user_id    String
+  account_id String
+  category   Category
+  amount     Int
+  period     BudgetPeriod?
+  start_date DateTime?
+  end_date   DateTime?
+
+  user    User    @relation(fields: [user_id], references: [id])
+  account Account @relation(fields: [account_id], references: [id])
+
+  @@index([start_date, end_date])
+  @@map("budgets")
+}
+
+model Goal {
+  id             String   @id @default(uuid())
+  user_id        String
+  goal_name      String   @db.VarChar(100)
+  target_amount  Int
+  current_amount Int
+  deadline       DateTime
+
+  user User @relation(fields: [user_id], references: [id])
+}
+
+model Reminder {
+  id            String   @id @default(uuid())
+  user_id       String
+  reminder_text String
+  reminder_date DateTime
+
+  user User @relation(fields: [user_id], references: [id])
+}
