@@ -33,7 +33,7 @@ describe('POST /api/accounts/:accountId/user/:userId/transactions', () => {
   it('should reject add new transaction if account is not found', async () => {
     const account = await AccountTest.get();
     const response = await supertest(app)
-      .post(`/api/accounts/${account.id}-1/user/${account.user_id}/transactions`)
+      .post(`/api/accounts/${account.id + 1}/user/${account.user_id}/transactions`)
       .set('X-API-TOKEN', "test")
       .send({
         amount: 10,
@@ -132,7 +132,7 @@ describe('PATCH /api/accounts/:accountId/user/:userId/transactions/:transactionI
     const account = await AccountTest.get();
     const transaction = await TransactionTest.get()
     const response = await supertest(app)
-      .patch(`/api/accounts/${account.id}-1/user/${account.user_id}/transactions/${transaction.id}`)
+      .patch(`/api/accounts/${account.id + 1}/user/${account.user_id}/transactions/${transaction.id}`)
       .set('X-API-TOKEN', "test")
       .send({
         amount: 10,
@@ -219,7 +219,7 @@ describe('GET /api/accounts/:accountId/transactions', () => {
   it('should reject get list transaction if account is not found', async () => {
     const account = await AccountTest.get();
     const response = await supertest(app)
-      .get(`/api/accounts/${account.id}-12/transactions`)
+      .get(`/api/accounts/${account.id + 12}/transactions`)
       .set('X-API-TOKEN', "test")
     logger.debug(response.body)
     expect(response.status).toBe(404)

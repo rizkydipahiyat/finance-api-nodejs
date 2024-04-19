@@ -126,7 +126,7 @@ export class TransactionService {
     return toTransactionResponse(deletedTransaction);
   }
 
-  static async list(user: User, accountId: string): Promise<Array<TransactionResponse>> {
+  static async list(user: User, accountId: number): Promise<Array<TransactionResponse>> {
     await UserService.checkUserMustExist(user.id);
 
     await AccountService.checkAccountMustExist(accountId, user.id);
@@ -136,6 +136,8 @@ export class TransactionService {
         account_id: accountId
       }
     });
+
+    console.log(transactions)
 
     return transactions.map((transaction) => toTransactionResponse(transaction));
 

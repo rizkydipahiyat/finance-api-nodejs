@@ -1,7 +1,7 @@
 import {Category, Transaction, TransactionType } from '@prisma/client'
 
 export type TransactionResponse = {
-  id: string;
+  id: number;
   transaction_date: Date;
   amount: number;
   description: string;
@@ -11,7 +11,7 @@ export type TransactionResponse = {
 
 export type CreateTransactionRequest = {
   user_id: string;
-  account_id: string;
+  account_id: number;
   amount: number;
   description: string;
   transaction_type: TransactionType;
@@ -21,16 +21,16 @@ export type CreateTransactionRequest = {
 
 export type GetTransactionRequest = {
   user_id: string; 
-  account_id: string; 
-  id: string;
+  account_id: number; 
+  id: number;
 }
 
 export type RemoveTransactionRequest = GetTransactionRequest
 
 export type UpdateTransactionRequest = {
-  id: string;
+  id: number;
   user_id: string;
-  account_id: string;
+  account_id: number;
   transaction_date?: Date | null;
   amount?: number | undefined;
   description?: string;

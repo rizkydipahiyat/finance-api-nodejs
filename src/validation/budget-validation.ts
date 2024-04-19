@@ -19,7 +19,7 @@ enum Category {
 export class BudgetValidation {
   static readonly CREATE: ZodType = z.object({
     user_id: z.string(),
-    account_id: z.string(),
+    account_id: z.number().positive(),
     category: z.nativeEnum(Category),
     amount: z.number().positive(),
     period: z.nativeEnum(BudgetPeriod).optional(),
@@ -27,9 +27,9 @@ export class BudgetValidation {
     end_date: z.date().transform((val) => val || new Date()).optional(),
   })
   static readonly UPDATE: ZodType = z.object({
-    id: z.string(),
+    id: z.number().positive(),
     user_id: z.string(),
-    account_id: z.string().optional(),
+    account_id: z.number().positive(),
     category: z.nativeEnum(Category).optional(),
     amount: z.number().positive().optional(),
     period: z.nativeEnum(BudgetPeriod).optional(),
@@ -37,7 +37,7 @@ export class BudgetValidation {
     end_date: z.date().transform((val) => val || new Date()).optional(),
   })
   static readonly GET : ZodType = z.object({
-    id: z.string(),
+    id: z.number().positive(),
     user_id: z.string(),
   })
 }

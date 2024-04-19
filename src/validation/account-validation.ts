@@ -7,13 +7,13 @@ export class AccountValidation {
     balance: z.number()
   })
   static readonly UPDATE: ZodType = z.object({
-    id: z.string(),
+    id: z.number().positive(),
     user_id: z.string(),
     account_name: z.string().min(1).max(100).optional(),
     balance: z.number().optional()
   })
   static readonly GET : ZodType = z.object({
-    id: z.string(),
+    id: z.number().positive(),
     user_id: z.string(),
   })
 }

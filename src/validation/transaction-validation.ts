@@ -18,7 +18,7 @@ enum Category {
 
 export class TransactionValidation {
   static readonly CREATE: ZodType = z.object({
-    account_id: z.string(),
+    account_id: z.number().positive(),
     user_id: z.string(),
     amount: z.number().positive(),
     description: z.string(),
@@ -26,8 +26,8 @@ export class TransactionValidation {
     category: z.nativeEnum(Category),
   })
   static readonly UPDATE: ZodType = z.object({
-    id: z.string(),
-    account_id: z.string(),
+    id: z.number().positive(),
+    account_id: z.number().positive(),
     user_id: z.string(),
     transaction_date: z.date().transform((val) => val || new Date()).optional(),
     amount: z.number().optional(),
@@ -36,8 +36,8 @@ export class TransactionValidation {
     category: z.nativeEnum(Category).optional(),
   })
   static readonly GET : ZodType = z.object({
-    id: z.string(),
+    id: z.number().positive(),
     user_id: z.string(),
-    account_id: z.string(),
+    account_id: z.number().positive(),
   })
 }

@@ -21,14 +21,11 @@ export class AccountService {
 
   }
 
-  static async checkAccountMustExist(id: string, userId: string): Promise<Account> {
+  static async checkAccountMustExist(id: number, userId: string): Promise<Account> {
     const account = await prismaClient.account.findUnique({
       where: {
         id: id,
         user_id: userId
-      },
-      include: {
-        user: true
       }
     })
     if(!account) {

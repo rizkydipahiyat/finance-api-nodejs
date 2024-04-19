@@ -1,7 +1,7 @@
 import { Goal } from '@prisma/client'
 
 export type GoalResponse = {
-  id: string;
+  id: number;
   goal_name: string;
   target_amount: number;
   current_amount: number;
@@ -19,13 +19,13 @@ export type CreateGoalRequest = {
 
 export type GetGoalRequest = {
   user_id: string;
-  id: string;
+  id: number;
 }
 
 export type RemoveGoalRequest = GetGoalRequest
 
 export type UpdateGoalRequest = {
-  id: string;
+  id: number;
   user_id: string;
   goal_name?: string;
   target_amount?: number;

@@ -38,7 +38,7 @@ describe('POST /api/budgets/:userId', () => {
       .set('X-API-TOKEN', "test")
       .send({
         category: "Foods",
-        account_id: account.id as string,
+        account_id: account.id,
         amount: 10,
         period: "WEEKLY",
       })
@@ -82,15 +82,15 @@ describe('PATCH /api/budgets/:budgetId/:userId', () => {
     expect(response.body.errors).toBeDefined()
   })
   it('should be able to update budget', async () => {
-    const budget = await BudgetTest.get();
     const user = await UserTest.get();
+    const budget = await BudgetTest.get();
     const account = await AccountTest.get();
     const response = await supertest(app)
       .patch(`/api/budgets/${budget.id}/${user.id}`)
       .set('X-API-TOKEN', "test")
       .send({
         category: "Foods",
-        account_id: account.id as string,
+        account_id: account.id,
         amount: 20,
         period: "MONTHLY",
       })
@@ -117,7 +117,7 @@ describe('GET /api/budgets/:userId', () => {
     await UserTest.delete()
   });
 
-  it('should reject get list budget if user is not foud', async () => {
+  it('should reject get list budget if user is not found', async () => {
     const user = await UserTest.get();
     const response = await supertest(app)
       .get(`/api/budgets/${user.id}11`)

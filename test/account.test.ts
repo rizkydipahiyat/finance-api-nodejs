@@ -45,7 +45,7 @@ describe('PATCH /api/accounts/:accountId/user/:userId', () => {
     const user = await UserTest.get();
     const account = await AccountTest.get();
     const response = await supertest(app)
-      .patch(`/api/accounts/${account.id}-123/user/${user.id}`)
+      .patch(`/api/accounts/${account.id + 1}/user/${user.id}`)
       .set('X-API-TOKEN', "test")
       .send({
         account_name: "test",
@@ -115,7 +115,7 @@ describe('DELETE /api/accounts/:accountId/user/:userId', () => {
     const account = await AccountTest.get();
     const user = await UserTest.get();
     const response = await supertest(app)
-      .delete(`/api/accounts/${account.id}-123/user/${user.id}`)
+      .delete(`/api/accounts/${account.id + 1}/user/${user.id}`)
       .set('X-API-TOKEN', "test")
     logger.debug(response.body)
     expect(response.status).toBe(404)
@@ -170,7 +170,7 @@ describe('GET /api/accounts/:accountId/user/:userId', () => {
     const account = await AccountTest.get();
     const user = await UserTest.get();
     const response = await supertest(app)
-      .get(`/api/accounts/${account.id}-123/user/${user.id}`)
+      .get(`/api/accounts/${account.id + 1}/user/${user.id}`)
       .set('X-API-TOKEN', "test")
     logger.debug(response.body)
     expect(response.status).toBe(404)

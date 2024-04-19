@@ -47,7 +47,7 @@ export class BudgetService {
   static async update(user: User, request: UpdateBudgetRequest): Promise<BudgetResponse> {
     const updateRequest = Validation.validate(BudgetValidation.UPDATE, request);
 
-    await UserService.checkUserMustExist(user.id)
+    await UserService.checkUserMustExist(user.id as string)
 
     
     if (updateRequest.period === "WEEKLY") {
@@ -88,23 +88,20 @@ export class BudgetService {
   }
 
   static async list(user: User, userId: string): Promise<Array<BudgetResponse>> {
-    await UserService.checkUserMustExist(user.id);
-
-    
-    if(userId !== user.id) {
-      throw new ResponseError(404, 'User is not found')
-    }
+    await UserService.checkUserMustExist(userId);
 
     const budgets = await prismaClient.budget.findMany({
       where: {
-        user_id: userId
+        user_id: user.id
       }
     })
+
+    console.log(budgets)
 
     return budgets.map((budget) => toBudgetResponse(budget));
   }
 
-  static async checkBudgetMustExist(budgetId: string, userId: string): Promise<Budget> {
+  static async checkBudgetMustExist(budgetId: number, userId: string): Promise<Budget> {
     
     const budget = await prismaClient.budget.findFirst({
       where: {

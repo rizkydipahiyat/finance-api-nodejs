@@ -1,7 +1,7 @@
 import { Account } from '@prisma/client'
 
 export type AccountResponse = {
-  id: string;
+  id: number;
   account_name: string;
   balance: number;
 }
@@ -15,13 +15,13 @@ export type CreateAccountRequest = {
 
 export type GetAccountRequest = {
   user_id: string; 
-  id: string;
+  id: number;
 }
 
 export type RemoveAccountRequest = GetAccountRequest
 
 export type UpdateAccountRequest = {
-  id: string;
+  id: number;
   user_id: string;
   account_name?: string;
   balance?: number;

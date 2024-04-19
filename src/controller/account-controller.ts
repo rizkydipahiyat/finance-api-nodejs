@@ -20,7 +20,7 @@ export class AccountController {
   static async update(req: UserRequest, res: Response, next: NextFunction) {
     try {
       const request: UpdateAccountRequest = req.body as UpdateAccountRequest;
-      request.id = req.params.accountId;
+      request.id = parseInt(req.params.accountId);
       request.user_id = req.params.userId;
       const response = await AccountService.update(req.user!, request);
       res.status(200).json({
@@ -33,7 +33,7 @@ export class AccountController {
   static async delete(req: UserRequest, res: Response, next: NextFunction) {
     try {
       const request: GetAccountRequest = {
-        id: req.params.accountId,
+        id: parseInt(req.params.accountId),
         user_id: req.params.userId
       }
       await AccountService.delete(req.user!, request);
@@ -49,7 +49,7 @@ export class AccountController {
   static async get(req: UserRequest, res: Response, next: NextFunction) {
     try {
       const request: GetAccountRequest = {
-        id: req.params.accountId,
+        id: parseInt(req.params.accountId),
         user_id: req.params.userId
       }
       const response = await AccountService.get(req.user!, request);

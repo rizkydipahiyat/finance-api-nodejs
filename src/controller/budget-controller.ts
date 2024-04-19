@@ -21,7 +21,7 @@ export class BudgetController {
     try {
       const request: UpdateBudgetRequest = req.body as UpdateBudgetRequest;
       request.user_id = req.params.userId
-      request.id = req.params.budgetId
+      request.id = parseInt(req.params.budgetId)
       const response = await BudgetService.update(req.body!, request);
       res.status(200).json({
         data: response
@@ -45,7 +45,7 @@ export class BudgetController {
   static async delete(req: UserRequest, res: Response, next: NextFunction) {
     try {
       const request: GetBudgetRequest = {
-        id: req.params.budgetId,
+        id: parseInt(req.params.budgetId),
         user_id: req.params.userId
       }
       await BudgetService.delete(req.user!, request);
@@ -60,7 +60,7 @@ export class BudgetController {
   static async get(req: UserRequest, res: Response, next: NextFunction) {
     try {
       const request: GetBudgetRequest = {
-        id: req.params.budgetId,
+        id: parseInt(req.params.budgetId),
         user_id: req.params.userId
       }
       const response = await BudgetService.get(req.user!, request);

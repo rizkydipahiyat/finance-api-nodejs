@@ -22,7 +22,7 @@ export class UserTest {
         token: "test"
       }
     })
-    return user.id
+    return user.id as string
   }
 
   static async get(): Promise<User> {
@@ -50,19 +50,19 @@ export class AccountTest {
     const user = await UserTest.get()
     const account = await prismaClient.account.create({
       data: {
-        id: "3",
+        id: 3,
         user_id: user.id as string,
         account_name: "test account",
         balance: 100,
       }
     })
-    return account.id as string;
+    return account.id;
   }
 
   static async get(): Promise<Account> {
     const account = await prismaClient.account.findFirst({
       where: {
-        id: "3"
+        id: 3
       }
     })
     if(!account) {
@@ -77,7 +77,7 @@ export class TransactionTest {
     await prismaClient.transaction.deleteMany({
       where: {
         account: {
-          id: "3"
+          id: 3
         }
       }
     })
@@ -86,8 +86,8 @@ export class TransactionTest {
     const account = await AccountTest.get();
     await prismaClient.transaction.create({
       data: {
-        id: "1",
-        account_id: account.id as string,
+        id: 1,
+        account_id: account.id,
         user_id: account.user_id as string,
         amount: 10,
         description: "Jajan",
@@ -99,7 +99,7 @@ export class TransactionTest {
   static async get(): Promise<Transaction> {
     const transaction = await prismaClient.transaction.findFirst({
       where: {
-        id: "1"
+        id: 1
       }
     })
     if(!transaction) {
@@ -124,20 +124,20 @@ export class BudgetTest {
     const account = await AccountTest.get()
     const budget = await prismaClient.budget.create({
       data: {
-        id: "1",
+        id: 1,
         user_id: user.id as string,
-        account_id: account.id as string,
+        account_id: account.id,
         category: "Foods",
         amount: 10,
         period: "WEEKLY",
       }
     })
-    return budget.id as string;
+    return budget.id;
   }
   static async get(): Promise<Budget> {
     const budget = await prismaClient.budget.findFirst({
       where: {
-        id: "1"
+        id: 1
       }
     })
     if(!budget) {
@@ -160,7 +160,7 @@ export class GoalTest {
     const user = await UserTest.get()
     const goal = await prismaClient.goal.create({
       data: {
-        id: "1",
+        id: 1,
         user_id: user.id as string,
         goal_name: "Mobil",
         target_amount: 200,
@@ -168,12 +168,12 @@ export class GoalTest {
         deadline: "2024-04-15T05:54:06.351Z",
       }
     })
-    return goal.id as string;
+    return goal.id;
   }
   static async get(): Promise<Goal> {
     const goal = await prismaClient.goal.findFirst({
       where: {
-        id: "1"
+        id: 1
       }
     })
     if(!goal) {

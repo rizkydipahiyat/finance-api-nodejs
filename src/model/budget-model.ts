@@ -1,8 +1,8 @@
 import {Budget, BudgetPeriod, Category, Transaction } from '@prisma/client'
 
 export type BudgetResponse = {
-  id: string;
-  account_id: string;
+  id: number;
+  account_id: number;
   category: Category;
   amount: number;
   period?: BudgetPeriod | null;
@@ -13,7 +13,7 @@ export type BudgetResponse = {
 
 export type CreateBudgetRequest = {
   user_id: string;
-  account_id: string;
+  account_id: number;
   category: Category;
   amount: number;
   period?: BudgetPeriod;
@@ -24,15 +24,15 @@ export type CreateBudgetRequest = {
 
 export type GetBudgetRequest = {
   user_id: string;
-  id: string;
+  id: number;
 }
 
 export type RemoveBudgetRequest = GetBudgetRequest
 
 export type UpdateBudgetRequest = {
-  id: string;
+  id: number;
   user_id: string;
-  account_id: string;
+  account_id: number;
   category?: Category;
   amount?: number;
   period?: BudgetPeriod;

@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -52,10 +52,10 @@ model User {
 }
 
 model Account {
-  id           String @id @default(uuid())
+  id           Int    @id @default(autoincrement())
   user_id      String
   account_name String @db.VarChar(100)
-  balance      Int    @db.Int
+  balance      Int
 
   user User @relation(fields: [user_id], references: [id])
 
@@ -66,9 +66,9 @@ model Account {
 }
 
 model Transaction {
-  id               String          @id @default(uuid())
+  id               Int             @id @default(autoincrement())
   user_id          String
-  account_id       String
+  account_id       Int
   transaction_date DateTime?       @default(now())
   amount           Int
   description      String          @db.VarChar(100)
@@ -82,9 +82,9 @@ model Transaction {
 }
 
 model Budget {
-  id         String        @id @default(uuid())
+  id         Int           @id @default(autoincrement())
   user_id    String
-  account_id String
+  account_id Int
   category   Category
   amount     Int
   period     BudgetPeriod?
@@ -99,7 +99,7 @@ model Budget {
 }
 
 model Goal {
-  id             String   @id @default(uuid())
+  id             Int      @id @default(autoincrement())
   user_id        String
   goal_name      String   @db.VarChar(100)
   target_amount  Int
@@ -110,7 +110,7 @@ model Goal {
 }
 
 model Reminder {
-  id            String   @id @default(uuid())
+  id            Int      @id @default(autoincrement())
   user_id       String
   reminder_text String
   reminder_date DateTime

@@ -10,7 +10,7 @@ export class GoalValidation {
     deadline: z.string().pipe(z.coerce.date())
   })
   static readonly UPDATE: ZodType = z.object({
-    id: z.string(),
+    id: z.number().positive(),
     user_id: z.string(),
     goal_name: z.string().optional(),
     current_amount: z.number().positive().optional(),
@@ -18,7 +18,7 @@ export class GoalValidation {
     deadline: z.string().pipe(z.coerce.date()).optional()
   })
   static readonly GET : ZodType = z.object({
-    id: z.string(),
+    id: z.number().positive(),
     user_id: z.string(),
   })
 }

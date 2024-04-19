@@ -21,7 +21,7 @@ export class GoalController {
     try {
       const request: UpdateGoalRequest = req.body as UpdateGoalRequest;
       request.user_id = req.params.userId
-      request.id = req.params.goalId
+      request.id = parseInt(req.params.goalId)
       const response = await GoalService.update(req.user!, request);
       res.status(200).json({
         data: response
@@ -44,7 +44,7 @@ export class GoalController {
   static async delete(req: UserRequest, res: Response, next: NextFunction) {
     try {
       const request: GetGoalRequest = {
-        id: req.params.goalId,
+        id: parseInt(req.params.goalId),
         user_id: req.params.userId
       }
       await GoalService.delete(req.user!, request);
